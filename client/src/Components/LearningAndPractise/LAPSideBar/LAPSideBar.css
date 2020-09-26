@@ -1,0 +1,30 @@
+.LAPvertical-menu {
+  width: 100px;
+  height: 610px;
+  overflow-y: auto;
+  
+}
+
+.LAPvertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.LAPvertical-menu a:hover {
+  background-color: #4caf50;
+  cursor: pointer;
+}
+
+.LAPvertical-menu a.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* @media only screen and (min-width: 1000px) {
+  .LAPnavbar-toggler {
+    display: none !important;
+  }
+} */

@@ -1,0 +1,18 @@
+
+.vertical-menu:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.bars {
+  font-size: 2rem;
+  color: #36393b;
+}
+
+.bars:hover {
+  cursor: pointer;
+}
+
+.bars_Main {
+  margin-left: 1rem;
+}
