@@ -1,0 +1,8 @@
+{
+  "db": "mongodb+srv://amin_rafaey:cib7WmNsD3PptUWm@pakstudentforumdb.dznlb.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "port": "4000",
+  "requiresAuth": true, 
+  "jwtPrivateKey":"jwtPrivateKey",
+  "USER": "pakstudentforumdot@gmail.com", 
+  "PASS": "Axd345fhe"
+}
