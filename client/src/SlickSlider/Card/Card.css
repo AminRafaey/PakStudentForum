@@ -1,0 +1,17 @@
+.slickSlider-Card{
+    width: 14rem;
+    margin-left: 2rem;
+    padding: 2rem;
+
+    border-radius: 2rem;
+  background-color: #f1f1f1;
+
+  -moz-box-shadow: inset 0 0 10px #0000004b;
+  -webkit-box-shadow: inset 0 0 10px #00000000;
+  box-shadow: inset 0 0 10px #2e2e2e73;
+  
+  cursor: pointer;
+}
+
+.slickSlider-Card > h6 {
+}

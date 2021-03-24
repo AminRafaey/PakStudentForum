@@ -15,7 +15,7 @@ export default function CategoryDescription(props) {
       <br />
       <h5>{category.description}</h5>
       <br />
-      <Link to={`/learning/${category.subCategories[0]}`}><button type="button" className="btn btn-success" style={{marginLeft:"30%"}}>Learn More!</button></Link>
+      <Link to={`/learning/Eazy/${category.subCategories[0]}`}><button type="button" className="btn btn-success" style={{marginLeft:"30%"}}>Learn More!</button></Link>
     </div>
   );
 };

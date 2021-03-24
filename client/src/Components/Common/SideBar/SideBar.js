@@ -1,20 +1,19 @@
 import React from "react";
 import "./SideBar.css";
-import {NavLink} from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import { NavLink } from "react-router-dom";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const useStyles = makeStyles({
   list: {
     width: 250,
   },
   fullList: {
-    width: 'auto',
+    width: "auto",
   },
 });
 
@@ -24,14 +23,21 @@ export default function SideBar(props) {
     left: false,
   });
 
-  let {selectedCategory, subCategories, user} = props;
-  let selectedSubCategoriesArray = selectedCategory.subCategories.map(
-    (id) => subCategories.find((sId) => sId._id === id)
+  let { selectedCategory, subCategories, user } = props;
+  let selectedSubCategoriesArray = selectedCategory.subCategories.map((id) =>
+    subCategories.find((sId) => sId._id === id)
   );
-let urlForSideBar = user?user.type === "Learner"?"reading":"admin/readMcq":"reading";
+  let urlForSideBar = user
+    ? user.type === "Learner"
+      ? "reading/Eazy"
+      : "admin/readMcq"
+    : "reading/Eazy";
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
 
@@ -41,7 +47,7 @@ let urlForSideBar = user?user.type === "Learner"?"reading":"admin/readMcq":"read
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
@@ -49,33 +55,42 @@ let urlForSideBar = user?user.type === "Learner"?"reading":"admin/readMcq":"read
     >
       <List>
         {selectedSubCategoriesArray.map((text, index) => (
-          <div className="vertical-menu">
-          <NavLink exact 
+          <div className="vertical-menu" key={text._id}>
+            <NavLink
+              exact
               activeClassName="activeNavElement"
-              style={{ color: "#212529", textDecoration:"none" }} to={`/${urlForSideBar}/${text._id}`} key={text._id}>
-          <ListItem  button key={text}> 
-          
-            <ListItemText primary={text.name} />
-           
-          </ListItem>
-          </NavLink>
+              style={{ color: "#212529", textDecoration: "none" }}
+              to={`/${urlForSideBar}/${text._id}`}
+              key={text._id}
+            >
+              <ListItem button key={text}>
+                <ListItemText primary={text.name} />
+              </ListItem>
+            </NavLink>
           </div>
         ))}
       </List>
     </div>
   );
 
-
   return (
     <div className="bars_Main">
-  {['left'].map((anchor) => (
-    <React.Fragment key={anchor}>
-    <i className="fas fa-bars bars" onClick={toggleDrawer(anchor, true)} id="toggleDrawer"></i>
-      <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-        {list(anchor)}
-      </Drawer>
-    </React.Fragment>
-  ))}
+      {["left"].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <i
+            className="fas fa-bars bars"
+            onClick={toggleDrawer(anchor, true)}
+            id="toggleDrawer"
+          ></i>
+          <Drawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+          >
+            {list(anchor)}
+          </Drawer>
+        </React.Fragment>
+      ))}
     </div>
   );
 }

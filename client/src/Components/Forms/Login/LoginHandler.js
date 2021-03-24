@@ -11,9 +11,3 @@ export const validationSchema = Yup.object({
     .min(4, "Password must be 4 characters or more")
     .max(30, "Password must be 30 characters or less").required("Password shouldn't be empty"),
 });
-
-
-export const handleSubmit = (values)=>{
-
-    console.log(values); 
-}

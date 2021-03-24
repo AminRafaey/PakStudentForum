@@ -5,8 +5,7 @@ import jwtDecode from "jwt-decode";
 import AccountIndex from "./Account/AccountIndex";
 import AdminRoutes from "./AdminRoutes";
 import PublicRoutes from "./PublicRoutes";
-import Spinner from "./UIHandlers/Spinner";
-
+import Header from "./Components/MainHeader/MainHeader";
 
 function App() {
   const [user, setUser] = useState();
@@ -17,18 +16,15 @@ function App() {
     }
   }, []);
 
-  //experiment mode
-  // return(
-  //   <div style={{backgroundColor: "#EEEEEE"}}>
-  //   <Spinner />
-  //   </div>
-  // )
+// return(
+// <Header />
+// )
+
   if (user && user.type === "Admin") {
     return <AdminRoutes user={user} />;
   }
   return (
     <Router>
-    {console.log(user)}
       <Switch>
         <Route path="/account">
           <AccountIndex setUser={setUser} />

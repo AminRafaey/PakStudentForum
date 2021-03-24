@@ -3,31 +3,31 @@ import Header from "./Header/Header";
 import SideBar from "./SideBar/SideBar";
 
 function Common(props) {
-  const [selectedCategory, setSelectedCategory] = useState({name:"", _id:"", subCategories:[""]});
-  useEffect(()=>console.log("Reload"),[props]
-  )
+  const [selectedCategory, setSelectedCategory] = useState({
+    name: "",
+    _id: "",
+    subCategories: [""],
+  });
+  useEffect(() => console.log("Reload"), [props]);
   return (
     <div className="fluid-container">
-    <div className = "row">
-    
-    {selectedCategory.name.length >0 ? (
-        <SideBar
-          selectedCategory={selectedCategory}
+      <div className="row">
+        {selectedCategory.name.length > 0 ? (
+          <SideBar
+            selectedCategory={selectedCategory}
+            subCategories={props.subCategories}
+            setMcqInitVal={props.setMcqInitVal}
+          />
+        ) : null}
+
+        <Header
           subCategories={props.subCategories}
-          setMcqInitVal={props.setMcqInitVal}
+          setSubCategories={props.setSubCategories}
+          categories={props.categories}
+          setCategories={props.setCategories}
+          setSelectedCategory={setSelectedCategory}
         />
-      ) : null}
-      
-      
-      <Header
-        subCategories={props.subCategories}
-        setSubCategories={props.setSubCategories}
-        categories={props.categories}
-        setCategories={props.setCategories}
-        setSelectedCategory={setSelectedCategory}
-      />
       </div>
-      
     </div>
   );
 }

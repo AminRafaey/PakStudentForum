@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { FetchSuggestionsOrProblems, DeleteSuggestionOrProblem } from "../Services/SuggestionOrProblem";
+import {
+  FetchSuggestionsOrProblems,
+  DeleteSuggestionOrProblem,
+} from "../Services/SuggestionOrProblem";
 import { Link } from "react-router-dom";
 import McqCard from "../Components/LearningAndPractise/McqCard/McqCard";
+import Spinner from "../UIHandlers/Spinner";
 
 export default function Suggestion(props) {
   const { setMcqInitVal } = props;
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   let pageSize = 5;
+  const [open,setOpen]=useState(true);
 
   useEffect(() => {
     FetchSuggestionsOrProblems("suggestions", pageSize, 1).then((res) => {
@@ -41,7 +46,7 @@ export default function Suggestion(props) {
         dataLength={items.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={<Spinner open={open} setOpen={setOpen} />}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>END...</b>
@@ -57,7 +62,6 @@ export default function Suggestion(props) {
               borderRadius: "1rem",
             }}
           >
-          {console.log(i)}
             <McqCard mcq={i} />
             <div className="row">
               <div className="col-md-1"></div>

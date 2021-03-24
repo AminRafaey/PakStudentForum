@@ -1,9 +1,7 @@
 import * as Yup from "yup";
-import {suggestion} from "../../../Services/Suggestion"
+import { suggestion } from "../../../Services/Suggestion";
 
-export const initialValues={
-  
- 
+export const initialValues = {
   statement: "",
   a: "",
   b: "",
@@ -11,7 +9,6 @@ export const initialValues={
   d: "",
   correct: "",
 };
-
 
 export const validationSchema = Yup.object({
   statement: Yup.string()
@@ -37,14 +34,20 @@ export const validationSchema = Yup.object({
     .required("Correct option Field shouldn't be empty"),
 });
 
-export const handleSubmit = (values, learnerId, resetForm)=>{
-suggestion({learnerId:learnerId,
-  statement:values.statement,
-  options:{
-    a:values.a,
-    b:values.b,
-    c:values.c,
-    d:values.d,
-    correct:values.correct
-  }}, resetForm);
-}
+export const handleSubmit = (values, learnerId, resetForm, setOpen) => {
+  suggestion(
+    {
+      learnerId: learnerId,
+      statement: values.statement,
+      options: {
+        a: values.a,
+        b: values.b,
+        c: values.c,
+        d: values.d,
+        correct: values.correct,
+      },
+    },
+    resetForm,
+    setOpen
+  );
+};

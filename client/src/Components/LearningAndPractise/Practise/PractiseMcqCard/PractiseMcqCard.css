@@ -1,0 +1,13 @@
+.card_Options > h6 {
+    display: inline;
+    color: #4caf50;
+  }
+  
+  .card_Options > p {
+    display: inline;
+  }
+  
+  .card_Options > button {
+    margin-left: 30%;
+  }
+  

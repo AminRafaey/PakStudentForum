@@ -1,10 +1,8 @@
 import * as Yup from "yup";
-import {addMcq} from "../../Services/Mcq";
-import {updateMcq} from "../../Services/Mcq"
+import { addMcq } from "../../Services/Mcq";
+import { updateMcq } from "../../Services/Mcq";
 
-export const initialValues={
-  
- 
+export const initialValues = {
   statement: "",
   a: "",
   b: "",
@@ -12,9 +10,8 @@ export const initialValues={
   d: "",
   correct: "",
   subCategories: "",
-
+  difficultyLevel: "",
 };
-
 
 export const validationSchema = Yup.object({
   statement: Yup.string()
@@ -38,69 +35,110 @@ export const validationSchema = Yup.object({
   correct: Yup.string()
     .oneOf(["a", "b", "c", "d"])
     .required("Correct option Field shouldn't be empty"),
-  subCategories: Yup
-            .array()
-            .of(Yup.string().required("Select atleast one Category")).required(
-    "Sub-Category option Field shouldn't be empty"
-  ),learnerId: Yup.string()
+  subCategories: Yup.array()
+    .of(Yup.string().required("Select atleast one Category"))
+    .required("Sub-Category option Field shouldn't be empty"),
+  difficultyLevel: Yup.string()
+    .oneOf(["Eazy", "Normal", "Difficult"])
+    .required("Choose one difficulty level"),
+  learnerId: Yup.string(),
 });
 
-
-export const handleSubmit = (values, subCategories,mcqInitVal, setMcqInitVal, resetForm) => {
-    mcqInitVal?mcqInitVal.learnerId? updateMcq({
-      _id:mcqInitVal._id,
-      statement:values.statement,
-      options:{
-        a:values.a,
-        b:values.b,
-        c:values.c,
-        d:values.d,
-        correct:values.correct
-      },
-      subCategories:values.subCategories.map(s=>(subCategories.find(su=>su.name === s))._id),
-      learnerId:mcqInitVal.learnerId,
-      status:"Active",
-      numOfShares:0,
-      date:new Date()
-    }, resetForm):mcqInitVal.errorCategory?updateMcq({
-      _id:mcqInitVal._id,
-      statement:values.statement,
-      options:{
-        a:values.a,
-        b:values.b,
-        c:values.c,
-        d:values.d,
-        correct:values.correct
-      },
-      subCategories:values.subCategories.map(s=>(subCategories.find(su=>su.name === s))._id),
-      status:"Active",
-      numOfShares:0,
-      date:new Date()
-    }, resetForm):updateMcq({
-      _id:mcqInitVal._id,
-      statement:values.statement,
-      options:{
-        a:values.a,
-        b:values.b,
-        c:values.c,
-        d:values.d,
-        correct:values.correct
-      },
-      subCategories:values.subCategories.map(s=>(subCategories.find(su=>su.name === s))._id),
-      status:"Active",
-      numOfShares:0,
-      date:new Date()
-    }, resetForm):
-    addMcq({
-      statement:values.statement,
-      options:{
-        a:values.a,
-        b:values.b,
-        c:values.c,
-        d:values.d,
-        correct:values.correct
-      },
-      subCategories:values.subCategories.map(s=>(subCategories.find(su=>su.name === s))._id)
-    }, resetForm);
-    setMcqInitVal("")
+export const handleSubmit = (
+  values,
+  subCategories,
+  mcqInitVal,
+  setMcqInitVal,
+  resetForm,
+  setOpen
+) => {
+  mcqInitVal
+    ? mcqInitVal.learnerId
+      ? updateMcq(
+          {
+            _id: mcqInitVal._id,
+            statement: values.statement,
+            options: {
+              a: values.a,
+              b: values.b,
+              c: values.c,
+              d: values.d,
+              correct: values.correct,
+            },
+            subCategories: values.subCategories.map(
+              (s) => subCategories.find((su) => su.name === s)._id
+            ),
+            learnerId: mcqInitVal.learnerId,
+            status: "Active",
+            difficultyLevel: values.difficultyLevel,
+            numOfShares: 0,
+            date: new Date(),
+          },
+          resetForm, 
+          setOpen
+        )
+      : mcqInitVal.errorCategory
+      ? updateMcq(
+          {
+            _id: mcqInitVal._id,
+            statement: values.statement,
+            options: {
+              a: values.a,
+              b: values.b,
+              c: values.c,
+              d: values.d,
+              correct: values.correct,
+            },
+            subCategories: values.subCategories.map(
+              (s) => subCategories.find((su) => su.name === s)._id
+            ),
+            status: "Active",
+            difficultyLevel: values.difficultyLevel,
+            numOfShares: 0,
+            date: new Date(),
+          },
+          resetForm,
+          setOpen
+        )
+      : updateMcq(
+          {
+            _id: mcqInitVal._id,
+            statement: values.statement,
+            options: {
+              a: values.a,
+              b: values.b,
+              c: values.c,
+              d: values.d,
+              correct: values.correct,
+            },
+            subCategories: values.subCategories.map(
+              (s) => subCategories.find((su) => su.name === s)._id
+            ),
+            status: "Active",
+            difficultyLevel: values.difficultyLevel,
+            numOfShares: 0,
+            date: new Date(),
+          },
+          resetForm,
+          setOpen
+        )
+    : addMcq(
+        {
+          statement: values.statement,
+          options: {
+            a: values.a,
+            b: values.b,
+            c: values.c,
+            d: values.d,
+            correct: values.correct,
+          },
+          subCategories: values.subCategories.map(
+            (s) => subCategories.find((su) => su.name === s)._id
+          ),
+          difficultyLevel: values.difficultyLevel,
+        },
+        resetForm,
+        setOpen
+      );
+  setMcqInitVal("");
 };

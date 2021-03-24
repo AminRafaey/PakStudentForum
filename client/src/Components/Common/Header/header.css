@@ -1,7 +1,7 @@
 .home-image {
   background-image: url("../../../home-image4.jpg");
 
-max-width: auto;
+  max-width: auto;
   height: 40rem;
   background-size: cover;
 }

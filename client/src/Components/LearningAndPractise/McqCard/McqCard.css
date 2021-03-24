@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Jameel Noori Nastaleeq';
+  src: url('https://pakstudentforum.herokuapp.com/http://www.fontsaddict.com/fontface/jameel-noori-nastaleeq.ttf');
+}
+
+
+.card_Options > h6 {
+    display: inline;
+    
+    color: #4caf50;
+  }
+  
+  .card_Options > p {
+    display: inline;
+    font-family: 'Jameel Noori Nastaleeq';
+    font-size: 1.3rem;
+  }
+  
+  .card_Options > button {
+    margin-left: 30%;
+  }
+  

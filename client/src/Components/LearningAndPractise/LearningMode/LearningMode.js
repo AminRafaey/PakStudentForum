@@ -7,8 +7,9 @@ import PractiseMcqCard from "../Practise/PractiseMcqCard/PractiseMcqCard";
 import Spinner from "../../../UIHandlers/Spinner";
 
 export default function LearningMode(props) {
-  let { subCategoryId } = useParams();
+const {subCategories} = props;
 
+  let {difficultyLevel, subCategoryId } = useParams();
   const [LAPCount, setLAPCount] = useState(0);
   const [mcqs, setMcqs] = useState([]);
  const [markedOptions, setMarkedOptions] = useState([]);
@@ -18,20 +19,21 @@ export default function LearningMode(props) {
 
   useEffect(() => {
     async function test() {
-      await fetchMcq(subCategoryId, 10, 1, setMcqs, true, setLAPCount);
+      await fetchMcq(difficultyLevel, subCategoryId, 10, 1, setMcqs, true, setLAPCount, setOpen);
     }
     test();
-  }, [subCategoryId]);
-  if(mcqs.length < 1){
-      return <Spinner open={open} setOpen={setOpen}/>
-  }
+  }, [subCategoryId, difficultyLevel]);
+  // if(mcqs.length < 1){
+  //     return <Spinner open={open} setOpen={setOpen}/>
+  // }
 
   return (
     <div className="row">
+    <Spinner open={open} setOpen={setOpen}/>
       <div className="col-sm-8 col-md-8 col-lg-8 ">
         <LAPHeader origin={"practise"}/>
         <div style={{width:"100%", margin: "1rem", marginTop: "4rem" }}>
-        {console.log(markedOptions)}
+        <span className="ml-4 h5">{subCategories.length>1?subCategories.find(s=>s._id == subCategoryId).description:""}</span>
           {mcqs.map((mcq,i) => (
             <div key={mcq._id} className="card" style={{ marginTop: "3rem" }}>
             <PractiseMcqCard mcq={mcq} setMarkedOptions={setMarkedOptions} index={i} markedOptions={markedOptions} totalMcq={mcqs.length}/>

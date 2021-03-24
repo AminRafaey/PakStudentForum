@@ -24,8 +24,9 @@ function AdminRoutes(props) {
   });
   const [homeMcqs, setHomeMcqs] = useState([]);
   const [mcqInitVal, setMcqInitVal] = useState("");
+  const [categoryInitVal, setCategoryInitVal] = useState("");
   return (
-    <div className="fluid-container">
+    <div className="container-fluid" style={{backgroundColor:"#f7f3f3"}}>
       <Router>
       <MainHeader 
       user={user}
@@ -63,6 +64,7 @@ function AdminRoutes(props) {
               setSubCategories={setSubCategories}
               categories={categories}
               setCategories={setCategories}
+              categoryInitVal={categoryInitVal}
             />
           </PrivateRoute>
           <PrivateRoute path="/" user={user} userType={"Admin"}>
@@ -70,6 +72,7 @@ function AdminRoutes(props) {
               categories={categories}
               setSelectedCategory={setSelectedCategory}
               selectedCategory={selectedCategory}
+              setCategoryInitVal={setCategoryInitVal}
             />
             <Home categories={categories} homeMcqs={homeMcqs} />
           </PrivateRoute>

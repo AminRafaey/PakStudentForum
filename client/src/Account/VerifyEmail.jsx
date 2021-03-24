@@ -1,30 +1,26 @@
-import React, { useEffect } from 'react';
-import {  useParams, Redirect } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import {verifyLearner} from "../Services/Learner"
+import { verifyLearner } from "../Services/Learner";
+import Spinner from "../UIHandlers/Spinner.js";
 
 function VerifyEmail() {
-    const {token} = useParams();
-    useEffect(() => {
-        async function verify(){
-            localStorage.setItem("token", token);
-            const res = await verifyLearner(jwtDecode(token)._id);
+  const { token } = useParams();
+  useEffect(() => {
+    async function verify() {
+      localStorage.setItem("token", token);
+      const res = await verifyLearner(jwtDecode(token)._id);
 
-window.location = "/"
-        };
-        try{
-            verify()
-        }
-        catch(err){
-            alert(err)
-        }
-    }, []);
+      window.location = "/";
+    }
+    try {
+      verify();
+    } catch (err) {
+      alert(err);
+    }
+  }, []);
 
-    return (
-        <div>
-            <h3 className="card-header">Verify Email</h3>
-        </div>
-    )
+  return <Spinner open={true} setOpen={() => console.log("Spinner")} />;
 }
 
-export default VerifyEmail; 
+export default VerifyEmail;

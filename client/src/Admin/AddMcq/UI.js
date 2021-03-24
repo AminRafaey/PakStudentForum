@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { fetchSubCategories } from "../../Services/FetchSubCategories";
+import Spinner from "../../UIHandlers/Spinner";
 import { initialValues, validationSchema, handleSubmit } from "./Handler";
 import {
   CustomInputComponentForText,
   CustomInputComponentForSelect,
 } from "../../Components/Forms/Common";
 
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -35,21 +36,23 @@ export default function UI({
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
 
   const classes = useStyles();
-  const [selectedCategory, setSelectedCategory] = React.useState({subCategories:[]});
+  const [selectedCategory, setSelectedCategory] = React.useState("");
+
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
     console.log(event.target.value);
-    setSelectedSubCategories(subCategories.filter(s=>event.target.value.subCategories.includes(s._id)));
+    setSelectedSubCategories(
+      subCategories.filter((s) =>
+        event.target.value.subCategories.includes(s._id)
+      )
+    );
   };
-
-  useEffect(() => {
-    if (!(subCategories.length > 1)) {
-      fetchSubCategories().then((res) => setSubCategories(res));
-    }
-  }, [subCategories, setSubCategories, rest]);
+  console.log(mcqInitVal);
   return (
     <div className="container-fluid mb-2 ">
+    <Spinner open={open} setOpen={setOpen} />
       <Formik
         initialValues={
           mcqInitVal
@@ -61,16 +64,24 @@ export default function UI({
                 d: mcqInitVal.d,
                 correct: mcqInitVal.correct,
                 subCategories: mcqInitVal.subCategories,
+                difficultyLevel: mcqInitVal.difficultyLevel,
               }
             : initialValues
         }
         validationSchema={validationSchema}
-        onSubmit={(values,{resetForm}) =>
-          handleSubmit(values, subCategories, mcqInitVal, setMcqInitVal, resetForm)
+        onSubmit={(values, { resetForm }) =>
+          handleSubmit(
+            values,
+            subCategories,
+            mcqInitVal,
+            setMcqInitVal,
+            resetForm,
+            setOpen
+          )
         }
       >
         <Form>
-          <div className="container formsMain" style={{ marginTop: "2rem" }}>
+          <div className="container" style={{ marginTop: "2rem" }}>
             {mcqInitVal.errorCategory ? (
               <div>
                 <h4>{"Error Category: " + mcqInitVal.errorCategory}</h4>
@@ -135,24 +146,38 @@ export default function UI({
               className="form-control"
               data={options}
             />
-            <br />
-            <br />
-<div className="row">
-<div className="col-md-4 h5">Select Category</div>
+            <Field
+              name="difficultyLevel"
+              component={CustomInputComponentForSelect}
+              placeholder="Difficulty Level"
+              className="form-control"
+              data={["Eazy", "Normal", "Difficult"]}
+            />
 
-            <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={selectedCategory}
-          onChange={handleChange}
-          label="selectedSubCategories"
-        >
-        {categories.map(c=><MenuItem value={c}>{c.name}</MenuItem>)}
-        </Select>
-      </FormControl>
-     </div>
+            <br />
+            <br />
+            <div className="row">
+              <div className="col-md-4 h5">Select Category</div>
+
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Category
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={selectedCategory}
+                  onChange={handleChange}
+                  label="selectedSubCategories"
+                >
+                  {categories.map((c) => (
+                    <MenuItem value={c} key={c._id}>
+                      {c.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
 
             <Field
               name="subCategories"
@@ -161,7 +186,6 @@ export default function UI({
               className="form-control"
               data={selectedSubCategories.map((s) => s.name)}
               multiple
-           
             />
           </div>
           <div className=" pt-2 d-flex justify-content-end">
@@ -175,5 +199,3 @@ export default function UI({
     </div>
   );
 }
-
-

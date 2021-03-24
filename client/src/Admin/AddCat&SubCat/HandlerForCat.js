@@ -1,10 +1,10 @@
 import * as Yup from "yup";
-import { addCat } from "../../Services/AddCatAndSubCat";
+import { addCat, updateCat } from "../../Services/AddCatAndSubCat";
 
 export const initialValues = {
   name: "",
   subCategories: [""],
-  description: "Hello how are you",
+  description: "",
 };
 
 export const validationSchema = Yup.object({
@@ -16,8 +16,8 @@ export const validationSchema = Yup.object({
     .of(Yup.string().required("Select atleast one Sub-Category"))
     .required("Sub-Category option shouldn't be empty"),
   description: Yup.string()
-    .min(10, "Description must contain 2 characters or more")
-    .max(40, "Description must contain 40 characters or less")
+    .min(30, "Description must contain 30 characters or more")
+    .max(100, "Description must contain 100 characters or less")
     .required("Description is required"),
 });
 
@@ -25,13 +25,29 @@ export const handleSubmit = (
   values,
   subCategories,
   categories,
-  setCategories
+  setCategories,
+  categoryInitVal,
+  resetForm,
+  setOpen
 ) => {
-  addCat({
+  categoryInitVal?updateCat({
     ...values,
     subCategories: values.subCategories.map(
       (s) => subCategories.find((su) => su.name === s)._id
     ),
-  });
+    _id:categoryInitVal._id
+  },
+  resetForm,
+  setOpen):
+  addCat(
+    {
+      ...values,
+      subCategories: values.subCategories.map(
+        (s) => subCategories.find((su) => su.name === s)._id
+      ),
+    },
+    resetForm,
+    setOpen
+  );
   setCategories([...categories]);
 };

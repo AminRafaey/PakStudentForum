@@ -1,0 +1,73 @@
+#breathing-button {
+    width: 320px;
+    -webkit-animation: breathing 2s ease-in-out infinite ;
+    animation: breathing 2s ease-in-out infinite ;
+    font-family: cursive;
+    font-size: 3rem;
+    color: #4caf50;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;    
+    position: relative;
+    }
+  
+  
+  @-webkit-keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  
+  25% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  
+  60% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  }
+  
+  @keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+  
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  
+  100% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  }
+  /*
+  .test{
+    font-size: 80px;
+    font-family: sail;
+    color:#4caf50;
+  background-color: #dddddd;
+  animation: breathing 1s;
+  } */
+  
+  /* #breathing-button:nth-child(2n+1) {
+    color: blue;
+  } */
+  
